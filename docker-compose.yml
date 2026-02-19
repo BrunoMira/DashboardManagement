@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+  main-server:
+    image: httpd:2.4
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./.docker/custom-httpd.conf:/usr/local/apache2/conf/httpd.conf
+      - ./.docker/apache.conf:/usr/local/apache2/conf/extra/apache.conf
+    depends_on:
+      - main-app
+    networks:
+      - laravel
+
+  main-app:
+    build:
+      context: .
+      dockerfile: ./.docker/Dockerfile
+      args:
+        UID: 1000
+        USER: '1000:1000'
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      main-db:
+        condition: service_healthy
+    networks:
+      - laravel
+    working_dir: /var/www/html
+    command: /bin/bash ./.docker/scripts/main-app-setup.sh
+
+  main-db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_HOST: ${DB_HOST}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "33060:3306"
+    volumes:
+      - .docker/dbdata:/var/lib/mysql
+    networks:
+      - laravel
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      retries: 5
+
+networks:
+  laravel:
+    driver: bridge
