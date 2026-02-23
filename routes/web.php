@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\CourseController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
+
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -17,5 +19,7 @@ Route::get('dashboard', function () {
 Route::get('/about', function () {
     return Inertia::render('About');
 })->middleware(['auth', 'verified'])->name('about');
+
+Route::get('/courses', [CourseController::class, 'index'])->name('courses');
 
 require __DIR__.'/settings.php';
