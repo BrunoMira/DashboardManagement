@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, Folder, Info, LayoutGrid, Book } from 'lucide-vue-next';
+import { BookOpen, Folder, Info, LayoutGrid, Book, Mail } from 'lucide-vue-next';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import AppLogo from './AppLogo.vue';
-import { about, courses, dashboard } from '@/routes';
+import { about, contact, courses, dashboard } from '@/routes';
 
 const mainNavItems: NavItem[] = [
     {
@@ -27,6 +27,11 @@ const mainNavItems: NavItem[] = [
         title: 'Courses',
         href: courses(),
         icon: Book,
+    },
+    {
+        title: 'Contact',
+        href: contact(),
+        icon: Mail,
     },
     {
         title: 'About',

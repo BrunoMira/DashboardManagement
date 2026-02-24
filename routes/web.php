@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CourseController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -21,5 +22,8 @@ Route::get('/about', function () {
 })->middleware(['auth', 'verified'])->name('about');
 
 Route::get('/courses', [CourseController::class, 'index'])->name('courses');
+
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 require __DIR__.'/settings.php';
