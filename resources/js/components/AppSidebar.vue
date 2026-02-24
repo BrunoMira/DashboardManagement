@@ -15,7 +15,8 @@ import {
 } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import AppLogo from './AppLogo.vue';
-import { about, contact, courses, dashboard } from '@/routes';
+import { about, contact, courses, dashboard} from '@/routes';
+import { index as properties } from '@/routes/properties';
 
 const mainNavItems: NavItem[] = [
     {
@@ -27,6 +28,11 @@ const mainNavItems: NavItem[] = [
         title: 'Courses',
         href: courses(),
         icon: Book,
+    },
+    {
+        title: 'Properties',
+        href: properties(),
+        icon: BookOpen,
     },
     {
         title: 'Contact',

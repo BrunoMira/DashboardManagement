@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\PropertyController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -22,6 +23,8 @@ Route::get('/about', function () {
 })->middleware(['auth', 'verified'])->name('about');
 
 Route::get('/courses', [CourseController::class, 'index'])->name('courses');
+
+Route::resource('properties', PropertyController::class)->only(['index', 'store', 'update', 'destroy']);
 
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
