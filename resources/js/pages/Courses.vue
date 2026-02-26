@@ -7,7 +7,7 @@ import CardFooter from '@/components/ui/card/CardFooter.vue';
 import CardHeader from '@/components/ui/card/CardHeader.vue';
 import CardTitle from '@/components/ui/card/CardTitle.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { about, courses } from '@/routes';
+import { courses as coursesIndex } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 
 interface Course {
@@ -29,7 +29,7 @@ const props = defineProps<Props>();
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Courses',
-        href: courses().url,
+        href: coursesIndex().url,
     },
 ];
 </script>

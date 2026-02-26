@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import {Dialog, DialogTitle, DialogDescription, DialogHeader, DialogContent, DialogFooter} from '@/components/ui/dialog';
+import {Dialog, DialogTitle, DialogDescription, DialogHeader, DialogContent} from '@/components/ui/dialog';
 
 
 type Props = {

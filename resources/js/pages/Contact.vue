@@ -43,7 +43,6 @@ const breadcrumbs: BreadcrumbItem[] = [
                         reset-on-success
                         :options="{preserveScroll: true}"
                         v-slot="{errors, processing}"
-                        @submit=""
                     >
                         <CardContent class="space-y-6">
                             <div class="grid gap-2">
