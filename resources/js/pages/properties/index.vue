@@ -10,6 +10,7 @@ import {Dialog, DialogTitle, DialogDescription, DialogHeader, DialogContent, Dia
 import {Input} from '@/components/ui/input';
 import InputError from '@/components/InputError.vue';
 import {Button} from '@/components/ui/button';
+import Modal from '@/components/Modal.vue';
 
 
 interface Property {
@@ -155,186 +156,167 @@ const formatEmbed = (input?: string) => {
             </CardContent>
         </Card>
 
-        <Dialog v-model:open="editOpen" >
-            <DialogContent class="sm:max-w-[540px]">
-                <DialogHeader>
-                    <DialogTitle>Edit Location</DialogTitle>
-                    <DialogDescription>Update the location of the property</DialogDescription>
-                </DialogHeader>
+        <Modal title="Edit Location" description="Update the location of the property" v-model="editOpen">
+            <Form
+                v-if="selected"
+                v-bind="update.form(selected.id)"
+                enctype="multipart/form-data"
+                reset-on-error
+                @success="editOpen = false"
+                v-slot="{errors, processing}"
+                class="spaces-y-6">
 
-                <Form
-                    v-if="selected"
-                    v-bind="update.form(selected.id)"
-                    enctype="multipart/form-data"
-                    reset-on-error
-                    @success="editOpen = false"
-                    v-slot="{errors, processing}"
-                    class="spaces-y-6">
+                <div class="grid gap-2">
+                    <label for="title">Title</label>
+                    <Input
+                        id="title"
+                        name="title"
+                        type="text"
+                        placeholder="Title"
+                        :default-value="selected.title"
+                        required
+                        :aria-invalid="errors.title ? 'true' : 'false'"
+                    />
+                    <InputError :message="errors?.title" />
+                </div>
+                <div class="grid gap-2">
+                    <label for="location">Location</label>
+                    <Input
+                        id="location"
+                        name="location"
+                        type="text"
+                        placeholder="Location"
+                        :default-value="selected.location"
+                        required
+                        :aria-invalid="errors.location ? 'true' : 'false'"
+                    />
+                    <InputError :message="errors?.location" />
+                </div>
+                <div class="grid gap-2">
+                    <label for="price">Price</label>
+                    <Input
+                        id="price"
+                        name="price"
+                        type="text"
+                        placeholder="Price"
+                        :default-value="selected.price"
+                        required
+                        :aria-invalid="errors.price ? 'true' : 'false'"
+                    />
+                    <InputError :message="errors?.price" />
+                </div>
+                <div class="grid gap-2">
+                    <label for="description">Description</label>
+                    <textarea
+                        id="description"
+                        name="description"
+                        rows="4"
+                        placeholder="Description"
+                        :default-value="selected.description"
+                        :aria-invalid="errors.description ? 'true' : 'false'"
+                        class="placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex min-h-[120px] w-full min-w-0 rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                    />
+                    <InputError :message="errors?.description" />
+                </div>
+                <div class="grid gap-2">
+                    <label for="image">Image</label>
+                    <Input
+                        id="image"
+                        name="image"
+                        type="file"
+                        placeholder="Image"
+                        :aria-invalid="errors.image ? 'true' : 'false'"
+                    />
+                    <div v-if="selected?.image" class="text-xs text-muted-foreground">Current image shown in table</div>
+                    <InputError :message="errors?.image" />
+                </div>
 
-                    <div class="grid gap-2">
-                        <label for="title">Title</label>
-                        <Input
-                            id="title"
-                            name="title"
-                            type="text"
-                            placeholder="Title"
-                            :default-value="selected.title"
-                            required
-                            :aria-invalid="errors.title ? 'true' : 'false'"
-                        />
-                        <InputError :message="errors?.title" />
-                    </div>
-                    <div class="grid gap-2">
-                        <label for="location">Location</label>
-                        <Input
-                            id="location"
-                            name="location"
-                            type="text"
-                            placeholder="Location"
-                            :default-value="selected.location"
-                            required
-                            :aria-invalid="errors.location ? 'true' : 'false'"
-                        />
-                        <InputError :message="errors?.location" />
-                    </div>
-                    <div class="grid gap-2">
-                        <label for="price">Price</label>
-                        <Input
-                            id="price"
-                            name="price"
-                            type="text"
-                            placeholder="Price"
-                            :default-value="selected.price"
-                            required
-                            :aria-invalid="errors.price ? 'true' : 'false'"
-                        />
-                        <InputError :message="errors?.price" />
-                    </div>
-                    <div class="grid gap-2">
-                        <label for="description">Description</label>
-                        <textarea
-                            id="description"
-                            name="description"
-                            rows="4"
-                            placeholder="Description"
-                            :default-value="selected.description"
-                            :aria-invalid="errors.description ? 'true' : 'false'"
-                            class="placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex min-h-[120px] w-full min-w-0 rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none disabled:cursor-not-allowed disabled:opacity-50"
-                        />
-                        <InputError :message="errors?.description" />
-                    </div>
-                    <div class="grid gap-2">
-                        <label for="image">Image</label>
-                        <Input
-                            id="image"
-                            name="image"
-                            type="file"
-                            placeholder="Image"
-                            :aria-invalid="errors.image ? 'true' : 'false'"
-                        />
-                        <div v-if="selected?.image" class="text-xs text-muted-foreground">Current image shown in table</div>
-                        <InputError :message="errors?.image" />
-                    </div>
+                <DialogFooter>
+                    <Button type="button" variant="outline" @click="editOpen = false" :disabled="processing">Cancel</Button>
+                    <Button type="submit" :processing="processing" :disabled="processing">Save</Button>
+                </DialogFooter>
+            </Form>
+        </Modal>
 
-                    <DialogFooter>
-                        <Button type="button" variant="outline" @click="editOpen = false" :disabled="processing">Cancel</Button>
-                        <Button type="submit" :processing="processing" :disabled="processing">Save</Button>
-                    </DialogFooter>
-                </Form>
-            </DialogContent>
-        </Dialog>
 
-        <Dialog v-model:open="createOpen" >
-            <DialogContent class="sm:max-w-[540px]">
-                <DialogHeader>
-                    <DialogTitle>Add Location</DialogTitle>
-                    <DialogDescription>Add a new location to the property</DialogDescription>
-                </DialogHeader>
+        <Modal title="Add Location" description="Add a new location to the property" v-model="createOpen">
+            <Form
+                v-bind="store.form()"
+                enctype="multipart/form-data"
+                reset-on-error@success="() => createOpen = false; newLocation=''"
+                @success="createOpen = false"
+                v-slot="{errors, processing}"
+                class="spaces-y-6">
 
-                <Form
-                    v-bind="store.form()"
-                    enctype="multipart/form-data"
-                    reset-on-error@success="() => createOpen = false; newLocation=''"
-                    @success="createOpen = false"
-                    v-slot="{errors, processing}"
-                    class="spaces-y-6">
+                <div class="grid gap-2">
+                    <label for="title">Title</label>
+                    <Input
+                        id="title"
+                        name="title"
+                        type="text"
+                        placeholder="Title"
+                        required
+                        :aria-invalid="errors.title ? 'true' : 'false'"
+                    />
+                    <InputError :message="errors?.title" />
+                </div>
+                <div class="grid gap-2">
+                    <label for="location">Location</label>
+                    <Input
+                        id="location"
+                        name="location"
+                        type="text"
+                        placeholder="Location"
+                        required
+                        :aria-invalid="errors.location ? 'true' : 'false'"
+                    />
+                    <InputError :message="errors?.location" />
+                </div>
+                <div class="grid gap-2">
+                    <label for="price">Price</label>
+                    <Input
+                        id="price"
+                        name="price"
+                        type="text"
+                        placeholder="Price"
+                        required
+                        :aria-invalid="errors.price ? 'true' : 'false'"
+                    />
+                    <InputError :message="errors?.price" />
+                </div>
+                <div class="grid gap-2">
+                    <label for="description">Description</label>
+                    <textarea
+                        id="description"
+                        name="description"
+                        rows="4"
+                        placeholder="Description"
+                        :aria-invalid="errors.description ? 'true' : 'false'"
+                        class="placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex min-h-[120px] w-full min-w-0 rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                    />
+                    <InputError :message="errors?.description" />
+                </div>
+                <div class="grid gap-2">
+                    <label for="image">Image</label>
+                    <Input
+                        id="image"
+                        name="image"
+                        type="file"
+                        placeholder="Image"
+                        :aria-invalid="errors.image ? 'true' : 'false'"
+                    />
+                    <InputError :message="errors?.image" />
+                </div>
 
-                    <div class="grid gap-2">
-                        <label for="title">Title</label>
-                        <Input
-                            id="title"
-                            name="title"
-                            type="text"
-                            placeholder="Title"
-                            required
-                            :aria-invalid="errors.title ? 'true' : 'false'"
-                        />
-                        <InputError :message="errors?.title" />
-                    </div>
-                    <div class="grid gap-2">
-                        <label for="location">Location</label>
-                        <Input
-                            id="location"
-                            name="location"
-                            type="text"
-                            placeholder="Location"
-                            required
-                            :aria-invalid="errors.location ? 'true' : 'false'"
-                        />
-                        <InputError :message="errors?.location" />
-                    </div>
-                    <div class="grid gap-2">
-                        <label for="price">Price</label>
-                        <Input
-                            id="price"
-                            name="price"
-                            type="text"
-                            placeholder="Price"
-                            required
-                            :aria-invalid="errors.price ? 'true' : 'false'"
-                        />
-                        <InputError :message="errors?.price" />
-                    </div>
-                    <div class="grid gap-2">
-                        <label for="description">Description</label>
-                        <textarea
-                            id="description"
-                            name="description"
-                            rows="4"
-                            placeholder="Description"
-                            :aria-invalid="errors.description ? 'true' : 'false'"
-                            class="placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex min-h-[120px] w-full min-w-0 rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none disabled:cursor-not-allowed disabled:opacity-50"
-                        />
-                        <InputError :message="errors?.description" />
-                    </div>
-                    <div class="grid gap-2">
-                        <label for="image">Image</label>
-                        <Input
-                            id="image"
-                            name="image"
-                            type="file"
-                            placeholder="Image"
-                            :aria-invalid="errors.image ? 'true' : 'false'"
-                        />
-                        <InputError :message="errors?.image" />
-                    </div>
+                <DialogFooter>
+                    <Button type="button" variant="outline" @click="createOpen = false" :disabled="processing">Cancel</Button>
+                    <Button type="submit" :processing="processing" :disabled="processing">Save</Button>
+                </DialogFooter>
+            </Form>
+        </Modal>
 
-                    <DialogFooter>
-                        <Button type="button" variant="outline" @click="createOpen = false" :disabled="processing">Cancel</Button>
-                        <Button type="submit" :processing="processing" :disabled="processing">Save</Button>
-                    </DialogFooter>
-                </Form>
-            </DialogContent>
-        </Dialog>
-
-        <Dialog v-model:open="deleteOpen" >
-            <DialogContent class="sm:max-w-[540px]">
-                <DialogHeader>
-                    <DialogTitle>Delete Location</DialogTitle>
-                    <DialogDescription>Are you sure you want to delete <span class="font-medium text-foreground">{{ selected?.title }}</span>?</DialogDescription>
-                </DialogHeader>
-
-                <Form
+        <Modal title="Delete Location" :description="`Are you sure you want to delete ${selected?.title}  ?`" v-model="deleteOpen">
+            <Form
                     v-if="selected"
                     v-bind="destroy.form(selected.id)"
                     reset-on-error@sucess="() => deleteOpen = false; selected = null"
@@ -346,8 +328,6 @@ const formatEmbed = (input?: string) => {
                             <Button type="submit" :processing="processing" :disabled="processing">Delete</Button>
                         </DialogFooter>
                 </Form>
-            </DialogContent>
-        </Dialog>
-
+        </Modal>
     </AppLayout>
 </template>
