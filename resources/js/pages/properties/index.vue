@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { Form, Head, Link } from '@inertiajs/vue3';
-import AppLayout from '@/layouts/AppLayout.vue';
-import { type BreadcrumbItem } from '@/types';
-import { index, index as property, destroy, update, store } from '@/routes/properties';
 import { computed, ref } from 'vue';
-import { local } from '@/routes/storage';
+import InputError from '@/components/InputError.vue';
+import Modal from '@/components/Modal.vue';
+import {Button} from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import {Dialog, DialogTitle, DialogDescription, DialogHeader, DialogContent, DialogFooter} from '@/components/ui/dialog';
 import {Input} from '@/components/ui/input';
-import InputError from '@/components/InputError.vue';
-import {Button} from '@/components/ui/button';
-import Modal from '@/components/Modal.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
+import { index, index as property, destroy, update, store } from '@/routes/properties';
+import { local } from '@/routes/storage';
+import { type BreadcrumbItem } from '@/types';
 
 
 interface Property {

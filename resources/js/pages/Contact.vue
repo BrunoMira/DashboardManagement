@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { Form, Head } from '@inertiajs/vue3';
-import AppLayout from '@/layouts/AppLayout.vue';
-import { type BreadcrumbItem } from '@/types';
-import { contact } from '@/routes';
-import { store as contactStore } from '@/routes/contact';
+import InputError from '@/components/InputError.vue';
+import Button from '@/components/ui/button/Button.vue';
 import Card from '@/components/ui/card/Card.vue';
+import CardContent from '@/components/ui/card/CardContent.vue';
+import CardDescription from '@/components/ui/card/CardDescription.vue';
+import CardFooter from '@/components/ui/card/CardFooter.vue';
 import CardHeader from '@/components/ui/card/CardHeader.vue';
 import CardTitle from '@/components/ui/card/CardTitle.vue';
-import CardDescription from '@/components/ui/card/CardDescription.vue';
-import CardContent from '@/components/ui/card/CardContent.vue';
-import InputError from '@/components/InputError.vue';
-import CardFooter from '@/components/ui/card/CardFooter.vue';
-import Spinner from '@/components/ui/spinner/Spinner.vue';
-import Button from '@/components/ui/button/Button.vue';
 import Input from '@/components/ui/input/Input.vue';
+import Spinner from '@/components/ui/spinner/Spinner.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
+import { contact } from '@/routes';
+import { store as contactStore } from '@/routes/contact';
+import { type BreadcrumbItem } from '@/types';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
