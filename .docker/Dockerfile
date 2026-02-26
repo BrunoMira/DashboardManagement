@@ -5,6 +5,9 @@ ARG UID=1000
 RUN apt-get update && apt-get install -y \
     zip \
     unzip \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev \
     git \
     libzip-dev \
     libicu-dev \
@@ -12,6 +15,8 @@ RUN apt-get update && apt-get install -y \
         pdo_mysql \
         zip \
         intl \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

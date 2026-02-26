@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\Property;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 
 class PropertyService
 {
@@ -40,10 +39,10 @@ class PropertyService
         return $property->delete();
     }
 
-    private function saveImage(UploadedFile $file, string $disk = 'public'): string | null
+    private function saveImage(UploadedFile $file): string | null
     {
         if ($file) {
-            $path = $file->store('properties', $disk);
+            $path = $file->store('properties');
             return $path ?? null;
         }
 
