@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Unit;
 
 use App\Models\Property;
 use App\Services\PropertyService;
@@ -12,7 +12,6 @@ use Tests\TestCase;
 class PropertyServiceTest extends TestCase
 {
     use RefreshDatabase;
-
     private PropertyService $service;
 
     protected function setUp(): void
