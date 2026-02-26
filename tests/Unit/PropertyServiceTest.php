@@ -12,6 +12,7 @@ use Tests\TestCase;
 class PropertyServiceTest extends TestCase
 {
     use RefreshDatabase;
+
     private PropertyService $service;
 
     protected function setUp(): void
@@ -25,7 +26,7 @@ class PropertyServiceTest extends TestCase
     /**
      * A basic feature test example.
      */
-    function test_create_property_with_image(): void
+    public function test_create_property_with_image(): void
     {
         $file = $this->createFakeImage('house.jpg');
 
@@ -43,7 +44,7 @@ class PropertyServiceTest extends TestCase
         Storage::disk()->assertExists($property->image);
     }
 
-    function test_create_property_without_image(): void
+    public function test_create_property_without_image(): void
     {
         $data = $this->returnData();
 
@@ -58,7 +59,7 @@ class PropertyServiceTest extends TestCase
         Storage::disk()->assertDirectoryEmpty('/properties');
     }
 
-    function test_it_updates_property_and_replaces_old_image(): void
+    public function test_it_updates_property_and_replaces_old_image(): void
     {
 
         $file = $this->createFakeImage('house.jpg');
@@ -94,7 +95,7 @@ class PropertyServiceTest extends TestCase
         Storage::disk()->assertMissing($oldImage);
     }
 
-    function test_update_property_without_image(): void
+    public function test_update_property_without_image(): void
     {
         $data = $this->returnData();
 
@@ -119,7 +120,7 @@ class PropertyServiceTest extends TestCase
         Storage::disk()->assertDirectoryEmpty('/properties');
     }
 
-    function test_it_deletes_property_and_removes_image(): void
+    public function test_it_deletes_property_and_removes_image(): void
     {
 
         $file = $this->createFakeImage('house.jpg');
@@ -155,7 +156,7 @@ class PropertyServiceTest extends TestCase
         $this->assertEquals($data['location'], $property->location);
         $this->assertEquals($data['price'], $property->price);
         $this->assertEquals($data['description'], $property->description);
-        if(isset($data['image'])) {
+        if (isset($data['image'])) {
             $this->assertEquals($data['image'], $property->image);
         }
     }

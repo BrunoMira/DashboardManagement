@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Storage;
 
 class PropertyObserver
 {
-
     public function updating(Property $property)
     {
         if ($property->image && $property->isDirty('image') && Storage::disk()->exists($property->getOriginal('image'))) {

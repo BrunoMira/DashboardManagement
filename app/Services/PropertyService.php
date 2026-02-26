@@ -31,6 +31,7 @@ class PropertyService
         }
 
         $property->update($data);
+
         return $property;
     }
 
@@ -39,10 +40,11 @@ class PropertyService
         return $property->delete();
     }
 
-    private function saveImage(UploadedFile $file): string | null
+    private function saveImage(UploadedFile $file): ?string
     {
         if ($file) {
             $path = $file->store('properties');
+
             return $path ?? null;
         }
 
