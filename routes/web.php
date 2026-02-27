@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\PropertyController;
@@ -24,6 +26,9 @@ Route::get('/about', function () {
 Route::get('/courses', [CourseController::class, 'index'])->name('courses');
 
 Route::resource('properties', PropertyController::class)->only(['index', 'store', 'update', 'destroy']);
+
+Route::resource('categories', CategoryController::class)->only(['index', 'store', 'update', 'destroy']);
+Route::resource('bookes', BookController::class)->only(['index', 'store', 'update', 'destroy']);
 
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
