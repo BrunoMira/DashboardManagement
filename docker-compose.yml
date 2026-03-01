@@ -42,14 +42,17 @@ services:
     ports:
       - "33060:3306"
     volumes:
-      - .docker/dbdata:/var/lib/mysql
+      - dbdata:/var/lib/mysql # 👈 aqui mudou
     networks:
       - laravel
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       interval: 5s
       retries: 5
 
 networks:
   laravel:
     driver: bridge
+
+volumes:
+  dbdata: # 👈 volume nomeado criado aqui
