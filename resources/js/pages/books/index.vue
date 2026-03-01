@@ -9,7 +9,6 @@ import { DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { index, index as book, destroy, update, store } from '@/routes/bookes';
-import { local } from '@/routes/storage';
 import { type BreadcrumbItem } from '@/types';
 
 interface Category {
@@ -71,11 +70,6 @@ const openDelete = (book: Book) => {
     selected.value = book;
     deleteOpen.value = true;
 };
-
-const imageUrl = (path?: string) => {
-    if (!path) return '';
-    return local.url(path);
-};
 </script>
 
 <template>
@@ -85,7 +79,7 @@ const imageUrl = (path?: string) => {
         <Card class="m-4 overflow-hidden">
             <CardHeader>
                 <div class="flex items-center justify-between">
-                    <CardTitle class="text-center">Bookes</CardTitle>
+                    <CardTitle class="text-center">Books</CardTitle>
                     <Button size="sm" @click="openCreate">Add Book</Button>
                 </div>
             </CardHeader>

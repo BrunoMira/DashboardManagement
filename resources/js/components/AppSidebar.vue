@@ -23,11 +23,11 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { about, contact, courses, dashboard } from '@/routes';
+import { index as bookes } from '@/routes/bookes';
+import { index as categories } from '@/routes/categories';
 import { index as properties } from '@/routes/properties';
 import { type NavItem } from '@/types';
 import AppLogo from './AppLogo.vue';
-import { index as categories } from '@/routes/categories';
-import { index as bookes } from '@/routes/bookes';
 
 const mainNavItems: NavItem[] = [
     {

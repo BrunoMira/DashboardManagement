@@ -15,7 +15,6 @@ import {
     update,
     store,
 } from '@/routes/categories';
-import { local } from '@/routes/storage';
 import { type BreadcrumbItem } from '@/types';
 
 interface Category {
