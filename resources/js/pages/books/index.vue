@@ -3,15 +3,14 @@ import { Form, Head, Link } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import InputError from '@/components/InputError.vue';
 import Modal from '@/components/Modal.vue';
-import {Button} from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
-import {DialogFooter} from '@/components/ui/dialog';
-import {Input} from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { DialogFooter } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { index, index as book, destroy, update, store } from '@/routes/bookes';
 import { local } from '@/routes/storage';
 import { type BreadcrumbItem } from '@/types';
-
 
 interface Category {
     id: number;
@@ -77,7 +76,6 @@ const imageUrl = (path?: string) => {
     if (!path) return '';
     return local.url(path);
 };
-
 </script>
 
 <template>
@@ -96,19 +94,54 @@ const imageUrl = (path?: string) => {
                     <table class="w-full text-left">
                         <thead>
                             <tr class="border-b">
-                                <th class="px-3 py-2 text-sm text-muted-foreground">Image</th>
-                                <th class="px-3 py-2 text-sm text-muted-foreground">Title</th>
-                                <th class="px-3 py-2 text-sm text-muted-foreground">Author</th>
-                                <th class="px-3 py-2 text-sm text-muted-foreground">Price</th>
-                                <th class="px-3 py-2 text-sm text-muted-foreground">Category</th>
-                                <th class="px-3 py-2 text-sm text-muted-foreground">Actions</th>
+                                <th
+                                    class="px-3 py-2 text-sm text-muted-foreground"
+                                >
+                                    Image
+                                </th>
+                                <th
+                                    class="px-3 py-2 text-sm text-muted-foreground"
+                                >
+                                    Title
+                                </th>
+                                <th
+                                    class="px-3 py-2 text-sm text-muted-foreground"
+                                >
+                                    Author
+                                </th>
+                                <th
+                                    class="px-3 py-2 text-sm text-muted-foreground"
+                                >
+                                    Price
+                                </th>
+                                <th
+                                    class="px-3 py-2 text-sm text-muted-foreground"
+                                >
+                                    Category
+                                </th>
+                                <th
+                                    class="px-3 py-2 text-sm text-muted-foreground"
+                                >
+                                    Actions
+                                </th>
                             </tr>
                         </thead>
                         <tbody v-if="items.length">
-                            <tr v-for="book in items" :key="book.id" class="border-b hover:bg-muted/30">
+                            <tr
+                                v-for="book in items"
+                                :key="book.id"
+                                class="border-b hover:bg-muted/30"
+                            >
                                 <td class="px-3 py-2">
-                                    <img v-if="book.cover_image" :src="book.full_image_path" class="h-14 w-20 rounded border bg-muted" />
-                                    <div v-else class="h-14 w-20 rounded border bg-muted"></div>
+                                    <img
+                                        v-if="book.cover_image"
+                                        :src="book.full_image_path"
+                                        class="h-14 w-20 rounded border bg-muted"
+                                    />
+                                    <div
+                                        v-else
+                                        class="h-14 w-20 rounded border bg-muted"
+                                    ></div>
                                 </td>
                                 <td class="px-3 py-2">
                                     {{ book.title }}
@@ -124,26 +157,46 @@ const imageUrl = (path?: string) => {
                                 </td>
                                 <td class="px-3 py-2">
                                     <div class="flex gap-2">
-                                        <Button size="sm" variant="outline" @click="openEdit(book)">Edit</Button>
-                                        <Button size="sm" variant="destructive" @click="openDelete(book)">Delete</Button>
+                                        <Button
+                                            size="sm"
+                                            variant="outline"
+                                            @click="openEdit(book)"
+                                            >Edit</Button
+                                        >
+                                        <Button
+                                            size="sm"
+                                            variant="destructive"
+                                            @click="openDelete(book)"
+                                            >Delete</Button
+                                        >
                                     </div>
                                 </td>
                             </tr>
                         </tbody>
                         <tbody v-else>
                             <tr class="border-b">
-                                <td class="px-3 py-2 text-center" colspan="6">No books found.</td>
+                                <td class="px-3 py-2 text-center" colspan="6">
+                                    No books found.
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <div v-if="props.books?.links?.length" class="mt-4 flex items-center gap-2">
-                    <Link v-for="link in props.books.links" :key="link.label" :href="link.url || index().url"
+                <div
+                    v-if="props.books?.links?.length"
+                    class="mt-4 flex items-center gap-2"
+                >
+                    <Link
+                        v-for="link in props.books.links"
+                        :key="link.label"
+                        :href="link.url || index().url"
                         preserve-scroll
                         class="rounded px-3 py-1 text-sm"
                         :class="[
-                            link.active ? 'bg-muted text-foreground' : 'text-muted-foreground hover:bg-muted/60',
+                            link.active
+                                ? 'bg-muted text-foreground'
+                                : 'text-muted-foreground hover:bg-muted/60',
                             !link.url ? 'pointer-events-none opacity-50' : '',
                         ]"
                     >
@@ -153,17 +206,21 @@ const imageUrl = (path?: string) => {
             </CardContent>
         </Card>
 
-        <Modal title="Edit Book" description="Update the book of the book" v-model="editOpen">
+        <Modal
+            title="Edit Book"
+            description="Update the book of the book"
+            v-model="editOpen"
+        >
             <Form
                 v-if="selected"
                 v-bind="update.form(selected.id)"
                 enctype="multipart/form-data"
                 reset-on-error
                 @success="editOpen = false"
-                v-slot="{errors, processing}"
-                class="spaces-y-6">
-
-                <div class="grid gap-2 mb-2">
+                v-slot="{ errors, processing }"
+                class="spaces-y-6"
+            >
+                <div class="mb-2 grid gap-2">
                     <label for="title">Title</label>
                     <Input
                         id="title"
@@ -204,9 +261,21 @@ const imageUrl = (path?: string) => {
                 </div>
                 <div class="grid gap-2">
                     <label for="category_id">Category</label>
-                    <select class="border rouded p-2 w-full" v-model="selected.category_id" name="category_id" placeholder="Category" required>
+                    <select
+                        class="rouded w-full border p-2"
+                        v-model="selected.category_id"
+                        name="category_id"
+                        placeholder="Category"
+                        required
+                    >
                         <option selected value=""></option>
-                        <option v-for="category in props.categories" :key="category.id" :value="category.id">{{ category.name }}</option>
+                        <option
+                            v-for="category in props.categories"
+                            :key="category.id"
+                            :value="category.id"
+                        >
+                            {{ category.name }}
+                        </option>
                     </select>
                     <InputError :message="errors?.category_id" />
                 </div>
@@ -219,28 +288,47 @@ const imageUrl = (path?: string) => {
                         placeholder="Image"
                         :aria-invalid="errors.cover_image ? 'true' : 'false'"
                     />
-                    <div v-if="selected?.cover_image" class="text-xs text-muted-foreground">Current image shown in table</div>
+                    <div
+                        v-if="selected?.cover_image"
+                        class="text-xs text-muted-foreground"
+                    >
+                        Current image shown in table
+                    </div>
                     <InputError :message="errors?.image" />
                 </div>
 
                 <DialogFooter>
-                    <Button type="button" variant="outline" @click="editOpen = false" :disabled="processing">Cancel</Button>
-                    <Button type="submit" :processing="processing" :disabled="processing">Save</Button>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        @click="editOpen = false"
+                        :disabled="processing"
+                        >Cancel</Button
+                    >
+                    <Button
+                        type="submit"
+                        :processing="processing"
+                        :disabled="processing"
+                        >Save</Button
+                    >
                 </DialogFooter>
             </Form>
         </Modal>
 
-
-        <Modal title="Add Book" description="Add a new book to the book" v-model="createOpen">
+        <Modal
+            title="Add Book"
+            description="Add a new book to the book"
+            v-model="createOpen"
+        >
             <Form
                 v-bind="store.form()"
                 enctype="multipart/form-data"
                 reset-on-error@success="() => createOpen = false; newBook=''"
                 @success="createOpen = false"
-                v-slot="{errors, processing}"
-                class="spaces-y-6">
-
-                <div class="grid gap-2 mb-2">
+                v-slot="{ errors, processing }"
+                class="spaces-y-6"
+            >
+                <div class="mb-2 grid gap-2">
                     <label for="title">Title</label>
                     <Input
                         id="title"
@@ -278,9 +366,20 @@ const imageUrl = (path?: string) => {
                 </div>
                 <div class="grid gap-2">
                     <label for="category_id">Category</label>
-                    <select class="border rouded p-2 w-full" name="category_id" placeholder="Category" required>
+                    <select
+                        class="rouded w-full border p-2"
+                        name="category_id"
+                        placeholder="Category"
+                        required
+                    >
                         <option selected value=""></option>
-                        <option v-for="category in props.categories" :key="category.id" :value="category.id">{{ category.name }}</option>
+                        <option
+                            v-for="category in props.categories"
+                            :key="category.id"
+                            :value="category.id"
+                        >
+                            {{ category.name }}
+                        </option>
                     </select>
                     <InputError :message="errors?.category_id" />
                 </div>
@@ -297,24 +396,49 @@ const imageUrl = (path?: string) => {
                 </div>
 
                 <DialogFooter>
-                    <Button type="button" variant="outline" @click="createOpen = false" :disabled="processing">Cancel</Button>
-                    <Button type="submit" :processing="processing" :disabled="processing">Save</Button>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        @click="createOpen = false"
+                        :disabled="processing"
+                        >Cancel</Button
+                    >
+                    <Button
+                        type="submit"
+                        :processing="processing"
+                        :disabled="processing"
+                        >Save</Button
+                    >
                 </DialogFooter>
             </Form>
         </Modal>
 
-        <Modal title="Delete Book" :description="`Are you sure you want to delete ${selected?.title}  ?`" v-model="deleteOpen">
+        <Modal
+            title="Delete Book"
+            :description="`Are you sure you want to delete ${selected?.title}  ?`"
+            v-model="deleteOpen"
+        >
             <Form
                 v-if="selected"
                 v-bind="destroy.form(selected.id)"
                 reset-on-error@sucess="() => deleteOpen = false; selected = null"
-                v-slot="{processing}">
-
-
-                    <DialogFooter>
-                        <Button type="button" variant="outline" @click="deleteOpen = false" :disabled="processing">Cancel</Button>
-                        <Button type="submit" :processing="processing" :disabled="processing">Delete</Button>
-                    </DialogFooter>
+                v-slot="{ processing }"
+            >
+                <DialogFooter>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        @click="deleteOpen = false"
+                        :disabled="processing"
+                        >Cancel</Button
+                    >
+                    <Button
+                        type="submit"
+                        :processing="processing"
+                        :disabled="processing"
+                        >Delete</Button
+                    >
+                </DialogFooter>
             </Form>
         </Modal>
     </AppLayout>

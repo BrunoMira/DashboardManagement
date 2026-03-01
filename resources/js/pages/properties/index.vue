@@ -3,15 +3,20 @@ import { Form, Head, Link } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import InputError from '@/components/InputError.vue';
 import Modal from '@/components/Modal.vue';
-import {Button} from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
-import {DialogFooter} from '@/components/ui/dialog';
-import {Input} from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { DialogFooter } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { index, index as property, destroy, update, store } from '@/routes/properties';
+import {
+    index,
+    index as property,
+    destroy,
+    update,
+    store,
+} from '@/routes/properties';
 import { local } from '@/routes/storage';
 import { type BreadcrumbItem } from '@/types';
-
 
 interface Property {
     id: number;
@@ -79,9 +84,10 @@ const decdeEntites = (str: string) => {
 const formatEmbed = (input?: string) => {
     if (!input) return '';
     const decoded = decdeEntites(input);
-    return decoded.replace(/height="[0-9]*"/g, 'height="100%"').replace(/width="[0-9]*"/g, 'width="100%"');
+    return decoded
+        .replace(/height="[0-9]*"/g, 'height="100%"')
+        .replace(/width="[0-9]*"/g, 'width="100%"');
 };
-
 </script>
 
 <template>
@@ -100,25 +106,68 @@ const formatEmbed = (input?: string) => {
                     <table class="w-full text-left">
                         <thead>
                             <tr class="border-b">
-                                <th class="px-3 py-2 text-sm text-muted-foreground">Image</th>
-                                <th class="px-3 py-2 text-sm text-muted-foreground">Title</th>
-                                <th class="px-3 py-2 text-sm text-muted-foreground">Location</th>
-                                <th class="px-3 py-2 text-sm text-muted-foreground">Price</th>
-                                <th class="px-3 py-2 text-sm text-muted-foreground">Description</th>
-                                <th class="px-3 py-2 text-sm text-muted-foreground">Actions</th>
+                                <th
+                                    class="px-3 py-2 text-sm text-muted-foreground"
+                                >
+                                    Image
+                                </th>
+                                <th
+                                    class="px-3 py-2 text-sm text-muted-foreground"
+                                >
+                                    Title
+                                </th>
+                                <th
+                                    class="px-3 py-2 text-sm text-muted-foreground"
+                                >
+                                    Location
+                                </th>
+                                <th
+                                    class="px-3 py-2 text-sm text-muted-foreground"
+                                >
+                                    Price
+                                </th>
+                                <th
+                                    class="px-3 py-2 text-sm text-muted-foreground"
+                                >
+                                    Description
+                                </th>
+                                <th
+                                    class="px-3 py-2 text-sm text-muted-foreground"
+                                >
+                                    Actions
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="property in items" :key="property.id" class="border-b hover:bg-muted/30">
+                            <tr
+                                v-for="property in items"
+                                :key="property.id"
+                                class="border-b hover:bg-muted/30"
+                            >
                                 <td class="px-3 py-2">
-                                    <img v-if="property.image" :src="imageUrl(property.image)" class="h-14 w-20 rounded border bg-muted" />
-                                    <div v-else class="h-14 w-20 rounded border bg-muted"></div>
+                                    <img
+                                        v-if="property.image"
+                                        :src="imageUrl(property.image)"
+                                        class="h-14 w-20 rounded border bg-muted"
+                                    />
+                                    <div
+                                        v-else
+                                        class="h-14 w-20 rounded border bg-muted"
+                                    ></div>
                                 </td>
                                 <td class="px-3 py-2">
                                     {{ property.title }}
                                 </td>
                                 <td class="px-3 py-2">
-                                    <div v-if="formatEmbed(property.location)" style="width: 140px; height: 70px; overflow: hidden; border-radius: 8px">
+                                    <div
+                                        v-if="formatEmbed(property.location)"
+                                        style="
+                                            width: 140px;
+                                            height: 70px;
+                                            overflow: hidden;
+                                            border-radius: 8px;
+                                        "
+                                    >
                                         {{ property.location }}
                                     </div>
                                 </td>
@@ -126,14 +175,30 @@ const formatEmbed = (input?: string) => {
                                     {{ property.price }}
                                 </td>
                                 <td class="px-3 py-2">
-                                    <div html class="text-sm text-muted-foreground">
-                                        {{ property.description || 'No description' }}
+                                    <div
+                                        html
+                                        class="text-sm text-muted-foreground"
+                                    >
+                                        {{
+                                            property.description ||
+                                            'No description'
+                                        }}
                                     </div>
                                 </td>
                                 <td class="px-3 py-2">
                                     <div class="flex gap-2">
-                                        <Button size="sm" variant="outline" @click="openEdit(property)">Edit</Button>
-                                        <Button size="sm" variant="destructive" @click="openDelete(property)">Delete</Button>
+                                        <Button
+                                            size="sm"
+                                            variant="outline"
+                                            @click="openEdit(property)"
+                                            >Edit</Button
+                                        >
+                                        <Button
+                                            size="sm"
+                                            variant="destructive"
+                                            @click="openDelete(property)"
+                                            >Delete</Button
+                                        >
                                     </div>
                                 </td>
                             </tr>
@@ -141,12 +206,20 @@ const formatEmbed = (input?: string) => {
                     </table>
                 </div>
 
-                <div v-if="props.properties?.links?.length" class="mt-4 flex items-center gap-2">
-                    <Link v-for="link in props.properties.links" :key="link.label" :href="link.url || index().url"
+                <div
+                    v-if="props.properties?.links?.length"
+                    class="mt-4 flex items-center gap-2"
+                >
+                    <Link
+                        v-for="link in props.properties.links"
+                        :key="link.label"
+                        :href="link.url || index().url"
                         preserve-scroll
                         class="rounded px-3 py-1 text-sm"
                         :class="[
-                            link.active ? 'bg-muted text-foreground' : 'text-muted-foreground hover:bg-muted/60',
+                            link.active
+                                ? 'bg-muted text-foreground'
+                                : 'text-muted-foreground hover:bg-muted/60',
                             !link.url ? 'pointer-events-none opacity-50' : '',
                         ]"
                     >
@@ -156,16 +229,20 @@ const formatEmbed = (input?: string) => {
             </CardContent>
         </Card>
 
-        <Modal title="Edit Location" description="Update the location of the property" v-model="editOpen">
+        <Modal
+            title="Edit Location"
+            description="Update the location of the property"
+            v-model="editOpen"
+        >
             <Form
                 v-if="selected"
                 v-bind="update.form(selected.id)"
                 enctype="multipart/form-data"
                 reset-on-error
                 @success="editOpen = false"
-                v-slot="{errors, processing}"
-                class="spaces-y-6">
-
+                v-slot="{ errors, processing }"
+                class="spaces-y-6"
+            >
                 <div class="grid gap-2">
                     <label for="title">Title</label>
                     <Input
@@ -214,7 +291,7 @@ const formatEmbed = (input?: string) => {
                         placeholder="Description"
                         :default-value="selected.description"
                         :aria-invalid="errors.description ? 'true' : 'false'"
-                        class="placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex min-h-[120px] w-full min-w-0 rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                        class="flex min-h-[120px] w-full min-w-0 rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 dark:bg-input/30"
                     />
                     <InputError :message="errors?.description" />
                 </div>
@@ -227,27 +304,46 @@ const formatEmbed = (input?: string) => {
                         placeholder="Image"
                         :aria-invalid="errors.image ? 'true' : 'false'"
                     />
-                    <div v-if="selected?.image" class="text-xs text-muted-foreground">Current image shown in table</div>
+                    <div
+                        v-if="selected?.image"
+                        class="text-xs text-muted-foreground"
+                    >
+                        Current image shown in table
+                    </div>
                     <InputError :message="errors?.image" />
                 </div>
 
                 <DialogFooter>
-                    <Button type="button" variant="outline" @click="editOpen = false" :disabled="processing">Cancel</Button>
-                    <Button type="submit" :processing="processing" :disabled="processing">Save</Button>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        @click="editOpen = false"
+                        :disabled="processing"
+                        >Cancel</Button
+                    >
+                    <Button
+                        type="submit"
+                        :processing="processing"
+                        :disabled="processing"
+                        >Save</Button
+                    >
                 </DialogFooter>
             </Form>
         </Modal>
 
-
-        <Modal title="Add Location" description="Add a new location to the property" v-model="createOpen">
+        <Modal
+            title="Add Location"
+            description="Add a new location to the property"
+            v-model="createOpen"
+        >
             <Form
                 v-bind="store.form()"
                 enctype="multipart/form-data"
                 reset-on-error@success="() => createOpen = false; newLocation=''"
                 @success="createOpen = false"
-                v-slot="{errors, processing}"
-                class="spaces-y-6">
-
+                v-slot="{ errors, processing }"
+                class="spaces-y-6"
+            >
                 <div class="grid gap-2">
                     <label for="title">Title</label>
                     <Input
@@ -292,7 +388,7 @@ const formatEmbed = (input?: string) => {
                         rows="4"
                         placeholder="Description"
                         :aria-invalid="errors.description ? 'true' : 'false'"
-                        class="placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex min-h-[120px] w-full min-w-0 rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                        class="flex min-h-[120px] w-full min-w-0 rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 dark:bg-input/30"
                     />
                     <InputError :message="errors?.description" />
                 </div>
@@ -309,25 +405,50 @@ const formatEmbed = (input?: string) => {
                 </div>
 
                 <DialogFooter>
-                    <Button type="button" variant="outline" @click="createOpen = false" :disabled="processing">Cancel</Button>
-                    <Button type="submit" :processing="processing" :disabled="processing">Save</Button>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        @click="createOpen = false"
+                        :disabled="processing"
+                        >Cancel</Button
+                    >
+                    <Button
+                        type="submit"
+                        :processing="processing"
+                        :disabled="processing"
+                        >Save</Button
+                    >
                 </DialogFooter>
             </Form>
         </Modal>
 
-        <Modal title="Delete Location" :description="`Are you sure you want to delete ${selected?.title}  ?`" v-model="deleteOpen">
+        <Modal
+            title="Delete Location"
+            :description="`Are you sure you want to delete ${selected?.title}  ?`"
+            v-model="deleteOpen"
+        >
             <Form
-                    v-if="selected"
-                    v-bind="destroy.form(selected.id)"
-                    reset-on-error@sucess="() => deleteOpen = false; selected = null"
-                    v-slot="{processing}">
-
-
-                        <DialogFooter>
-                            <Button type="button" variant="outline" @click="deleteOpen = false" :disabled="processing">Cancel</Button>
-                            <Button type="submit" :processing="processing" :disabled="processing">Delete</Button>
-                        </DialogFooter>
-                </Form>
+                v-if="selected"
+                v-bind="destroy.form(selected.id)"
+                reset-on-error@sucess="() => deleteOpen = false; selected = null"
+                v-slot="{ processing }"
+            >
+                <DialogFooter>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        @click="deleteOpen = false"
+                        :disabled="processing"
+                        >Cancel</Button
+                    >
+                    <Button
+                        type="submit"
+                        :processing="processing"
+                        :disabled="processing"
+                        >Delete</Button
+                    >
+                </DialogFooter>
+            </Form>
         </Modal>
     </AppLayout>
 </template>

@@ -34,8 +34,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 </script>
 
-
-
 <template>
     <Head title="Courses" />
 
@@ -43,19 +41,47 @@ const breadcrumbs: BreadcrumbItem[] = [
         <div
             class="flex h-full flex-1 flex-col gap-3 overflow-x-auto rounded-xl p-4"
         >
-            <div class="text-center mb-3">
-                <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">Our Courses</h1>
-                <p class="text-sm text-center text-gray-500 dark:text-gray-400 max-w-3xl mx-auto">We offer a variety of courses to suit your needs.</p>
+            <div class="mb-3 text-center">
+                <h1
+                    class="mb-4 text-4xl font-bold text-gray-900 dark:text-white"
+                >
+                    Our Courses
+                </h1>
+                <p
+                    class="mx-auto max-w-3xl text-center text-sm text-gray-500 dark:text-gray-400"
+                >
+                    We offer a variety of courses to suit your needs.
+                </p>
             </div>
             <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                <Card v-for="course in props.courses" :key="course.id" class="hover:shadow-lg transition-shadow hover:border-2 transition-border shadow-md duration-1000">
-                    <div class="relative h-48 w-full overflow-hidden rounded-t-xl">
-                        <img :src="course.image" :alt="course.name" class=" w-full h-full object-cover" />
-                        <div class="absolute top-4 right-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">${{ course.price }}</div>
+                <Card
+                    v-for="course in props.courses"
+                    :key="course.id"
+                    class="transition-border shadow-md transition-shadow duration-1000 hover:border-2 hover:shadow-lg"
+                >
+                    <div
+                        class="relative h-48 w-full overflow-hidden rounded-t-xl"
+                    >
+                        <img
+                            :src="course.image"
+                            :alt="course.name"
+                            class="h-full w-full object-cover"
+                        />
+                        <div
+                            class="absolute top-4 right-4 rounded-full bg-blue-600 px-3 py-1 text-sm font-semibold text-white"
+                        >
+                            ${{ course.price }}
+                        </div>
                     </div>
                     <CardHeader>
-                        <CardTitle class="text-lg text-gray-900 dark:text-white">{{ course.name }}</CardTitle>
-                        <CardDescription class="line-clamp-2 text-gray-600 dark:text-gray-300">{{ course.description }}</CardDescription>
+                        <CardTitle
+                            class="text-lg text-gray-900 dark:text-white"
+                            >{{ course.name }}</CardTitle
+                        >
+                        <CardDescription
+                            class="line-clamp-2 text-gray-600 dark:text-gray-300"
+                            >{{ course.description }}</CardDescription
+                        >
                     </CardHeader>
                     <CardContent class="p-4">
                         <p class="text-sm text-gray-500 dark:text-gray-400">

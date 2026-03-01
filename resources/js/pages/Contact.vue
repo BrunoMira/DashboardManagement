@@ -21,7 +21,6 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: contact().url,
     },
 ];
-
 </script>
 
 <template>
@@ -31,22 +30,28 @@ const breadcrumbs: BreadcrumbItem[] = [
         <div
             class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4"
         >
-            <div class="relative min-h-[100vh] flex-1 px-2 rounded-xl border border-sidebar-border/70 md:min-h-min ">
-                <Card class="px-2 mx-auto my-6">
+            <div
+                class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 px-2 md:min-h-min"
+            >
+                <Card class="mx-auto my-6 px-2">
                     <CardHeader>
                         <CardTitle class="text-center">Contact us</CardTitle>
-                        <CardDescription class="text-center">Get in touch with us</CardDescription>
+                        <CardDescription class="text-center">
+                            Get in touch with us
+                        </CardDescription>
                     </CardHeader>
 
                     <Form
                         v-bind="contactStore.form()"
                         reset-on-success
-                        :options="{preserveScroll: true}"
-                        v-slot="{errors, processing}"
+                        :options="{ preserveScroll: true }"
+                        v-slot="{ errors, processing }"
                     >
                         <CardContent class="space-y-6">
                             <div class="grid gap-2">
-                                <label for="name" class="text-sm font-medium">Name</label>
+                                <label for="name" class="text-sm font-medium"
+                                    >Name</label
+                                >
                                 <Input
                                     id="name"
                                     name="name"
@@ -54,48 +59,70 @@ const breadcrumbs: BreadcrumbItem[] = [
                                     placeholder="John Doe"
                                     autofocus
                                     required
-                                    :aria-invalid="errors.name ? 'true' : 'false'"
+                                    :aria-invalid="
+                                        errors.name ? 'true' : 'false'
+                                    "
                                 />
-                                <InputError :message="(errors.name as string) || ''" />
+                                <InputError
+                                    :message="(errors.name as string) || ''"
+                                />
                             </div>
                             <div class="grid gap-2">
-                                <label for="email" class="text-sm font-medium">Email</label>
+                                <label for="email" class="text-sm font-medium"
+                                    >Email</label
+                                >
                                 <Input
                                     id="email"
                                     name="email"
                                     type="email"
                                     placeholder="john@doe.com"
                                     required
-                                    :aria-invalid="errors.email ? 'true' : 'false'"
+                                    :aria-invalid="
+                                        errors.email ? 'true' : 'false'
+                                    "
                                 />
-                                <InputError :message="(errors.email as string) || ''" />
+                                <InputError
+                                    :message="(errors.email as string) || ''"
+                                />
                             </div>
                             <div class="grid gap-2">
-                                <label for="phone" class="text-sm font-medium">Phone</label>
+                                <label for="phone" class="text-sm font-medium"
+                                    >Phone</label
+                                >
                                 <Input
                                     id="phone"
                                     name="phone"
                                     type="text"
                                     placeholder="Phone"
-                                    :aria-invalid="errors.phone ? 'true' : 'false'"
+                                    :aria-invalid="
+                                        errors.phone ? 'true' : 'false'
+                                    "
                                 />
-                                <InputError :message="(errors.phone as string) || ''" />
+                                <InputError
+                                    :message="(errors.phone as string) || ''"
+                                />
                             </div>
                             <div class="grid gap-2">
-                                <label for="message" class="text-sm font-medium">Message</label>
+                                <label for="message" class="text-sm font-medium"
+                                    >Message</label
+                                >
                                 <textarea
                                     id="message"
                                     name="message"
                                     rows="4"
                                     placeholder="Message"
                                     required
-                                    :aria-invalid="errors.message ? 'true' : 'false'"
-                                    class="placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex min-h-[120px] w-full min-w-0 rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                                    :aria-invalid="
+                                        errors.message ? 'true' : 'false'
+                                    "
+                                    class="flex min-h-[120px] w-full min-w-0 rounded-md border border-input bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 dark:bg-input/30"
                                 />
-                                <InputError :message="(errors.message as string) || ''" />
+                                <InputError
+                                    :message="(errors.message as string) || ''"
+                                />
                             </div>
                         </CardContent>
-                        <CardFooter class="flex justify-end mt-2">
+                        <CardFooter class="mt-2 flex justify-end">
                             <Button
                                 type="submit"
                                 :processing="processing"
@@ -103,15 +130,14 @@ const breadcrumbs: BreadcrumbItem[] = [
                                 :disabled="processing"
                                 :aria-busy="processing"
                             >
-
-                                <Spinner v-if="processing" class="h-4 w-4 mr-2 animate-spin" />
-                                <span >
-                                    Submit
-                                </span>
+                                <Spinner
+                                    v-if="processing"
+                                    class="mr-2 h-4 w-4 animate-spin"
+                                />
+                                <span> Submit </span>
                             </Button>
                         </CardFooter>
                     </Form>
-
                 </Card>
             </div>
         </div>

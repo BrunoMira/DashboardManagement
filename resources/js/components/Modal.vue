@@ -1,16 +1,20 @@
 <script setup lang="ts">
-import {Dialog, DialogTitle, DialogDescription, DialogHeader, DialogContent} from '@/components/ui/dialog';
-
+import {
+    Dialog,
+    DialogTitle,
+    DialogDescription,
+    DialogHeader,
+    DialogContent,
+} from '@/components/ui/dialog';
 
 type Props = {
     title: string;
     description: string;
-}
+};
 
-const {title, description} = defineProps<Props>();
+const { title, description } = defineProps<Props>();
 
 const open = defineModel<boolean>();
-
 </script>
 
 <template>

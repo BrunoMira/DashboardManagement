@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, Folder, Info, LayoutGrid, Book, Mail, Library, MapPin } from 'lucide-vue-next';
+import {
+    BookOpen,
+    Folder,
+    Info,
+    LayoutGrid,
+    Book,
+    Mail,
+    Library,
+    MapPin,
+} from 'lucide-vue-next';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
@@ -13,12 +22,12 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { about, contact, courses, dashboard} from '@/routes';
+import { about, contact, courses, dashboard } from '@/routes';
 import { index as properties } from '@/routes/properties';
 import { type NavItem } from '@/types';
 import AppLogo from './AppLogo.vue';
-import {index as categories} from '@/routes/categories';
-import {index as bookes} from '@/routes/bookes';
+import { index as categories } from '@/routes/categories';
+import { index as bookes } from '@/routes/bookes';
 
 const mainNavItems: NavItem[] = [
     {

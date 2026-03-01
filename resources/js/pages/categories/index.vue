@@ -3,15 +3,20 @@ import { Form, Head, Link } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import InputError from '@/components/InputError.vue';
 import Modal from '@/components/Modal.vue';
-import {Button} from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
-import {DialogFooter} from '@/components/ui/dialog';
-import {Input} from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { DialogFooter } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { index, index as category, destroy, update, store } from '@/routes/categories';
+import {
+    index,
+    index as category,
+    destroy,
+    update,
+    store,
+} from '@/routes/categories';
 import { local } from '@/routes/storage';
 import { type BreadcrumbItem } from '@/types';
-
 
 interface Category {
     id: number;
@@ -60,7 +65,6 @@ const openDelete = (category: Category) => {
     selected.value = category;
     deleteOpen.value = true;
 };
-
 </script>
 
 <template>
@@ -79,13 +83,29 @@ const openDelete = (category: Category) => {
                     <table class="w-full text-left">
                         <thead>
                             <tr class="border-b">
-                                <th class="px-3 py-2 text-sm text-muted-foreground">Id</th>
-                                <th class="px-3 py-2 text-sm text-muted-foreground">Name</th>
-                                <th class="px-3 py-2 text-sm text-muted-foreground">Actions</th>
+                                <th
+                                    class="px-3 py-2 text-sm text-muted-foreground"
+                                >
+                                    Id
+                                </th>
+                                <th
+                                    class="px-3 py-2 text-sm text-muted-foreground"
+                                >
+                                    Name
+                                </th>
+                                <th
+                                    class="px-3 py-2 text-sm text-muted-foreground"
+                                >
+                                    Actions
+                                </th>
                             </tr>
                         </thead>
                         <tbody v-if="items.length">
-                            <tr v-for="category in items" :key="category.id" class="border-b hover:bg-muted/30">
+                            <tr
+                                v-for="category in items"
+                                :key="category.id"
+                                class="border-b hover:bg-muted/30"
+                            >
                                 <td class="px-3 py-2">
                                     {{ category.id }}
                                 </td>
@@ -93,28 +113,48 @@ const openDelete = (category: Category) => {
                                     {{ category.name }}
                                 </td>
 
-                                <td class="px-3 py-2 flex justify-self-end">
+                                <td class="flex justify-self-end px-3 py-2">
                                     <div class="flex gap-2">
-                                        <Button size="sm" variant="outline" @click="openEdit(category)">Edit</Button>
-                                        <Button size="sm" variant="destructive" @click="openDelete(category)">Delete</Button>
+                                        <Button
+                                            size="sm"
+                                            variant="outline"
+                                            @click="openEdit(category)"
+                                            >Edit</Button
+                                        >
+                                        <Button
+                                            size="sm"
+                                            variant="destructive"
+                                            @click="openDelete(category)"
+                                            >Delete</Button
+                                        >
                                     </div>
                                 </td>
                             </tr>
                         </tbody>
                         <tbody v-else>
                             <tr class="border-b">
-                                <td class="px-3 py-2 text-center" colspan="3">No categories found.</td>
+                                <td class="px-3 py-2 text-center" colspan="3">
+                                    No categories found.
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <div v-if="props.categories?.links?.length" class="mt-4 flex items-center gap-2">
-                    <Link v-for="link in props.categories.links" :key="link.label" :href="link.url || index().url"
+                <div
+                    v-if="props.categories?.links?.length"
+                    class="mt-4 flex items-center gap-2"
+                >
+                    <Link
+                        v-for="link in props.categories.links"
+                        :key="link.label"
+                        :href="link.url || index().url"
                         preserve-scroll
                         class="rounded px-3 py-1 text-sm"
                         :class="[
-                            link.active ? 'bg-muted text-foreground' : 'text-muted-foreground hover:bg-muted/60',
+                            link.active
+                                ? 'bg-muted text-foreground'
+                                : 'text-muted-foreground hover:bg-muted/60',
                             !link.url ? 'pointer-events-none opacity-50' : '',
                         ]"
                     >
@@ -124,16 +164,20 @@ const openDelete = (category: Category) => {
             </CardContent>
         </Card>
 
-        <Modal title="Edit Category" description="Update the name of a category" v-model="editOpen">
+        <Modal
+            title="Edit Category"
+            description="Update the name of a category"
+            v-model="editOpen"
+        >
             <Form
                 v-if="selected"
                 v-bind="update.form(selected.id)"
                 reset-on-error
                 @success="editOpen = false"
-                v-slot="{errors, processing}"
-                class="spaces-y-6">
-
-                <div class="grid gap-2  mb-2">
+                v-slot="{ errors, processing }"
+                class="spaces-y-6"
+            >
+                <div class="mb-2 grid gap-2">
                     <label for="name">Name</label>
                     <Input
                         id="name"
@@ -147,22 +191,36 @@ const openDelete = (category: Category) => {
                     <InputError :message="errors?.name" />
                 </div>
                 <DialogFooter>
-                    <Button type="button" variant="outline" @click="editOpen = false" :disabled="processing">Cancel</Button>
-                    <Button type="submit" :processing="processing" :disabled="processing">Save</Button>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        @click="editOpen = false"
+                        :disabled="processing"
+                        >Cancel</Button
+                    >
+                    <Button
+                        type="submit"
+                        :processing="processing"
+                        :disabled="processing"
+                        >Save</Button
+                    >
                 </DialogFooter>
             </Form>
         </Modal>
 
-
-        <Modal title="Add Category" description="Add a new category" v-model="createOpen">
+        <Modal
+            title="Add Category"
+            description="Add a new category"
+            v-model="createOpen"
+        >
             <Form
                 v-bind="store.form()"
                 reset-on-error@success="() => createOpen = false; newCategory=''"
                 @success="createOpen = false"
-                v-slot="{errors, processing}"
-                class="spaces-y-6">
-
-                <div class="grid gap-2 mb-2">
+                v-slot="{ errors, processing }"
+                class="spaces-y-6"
+            >
+                <div class="mb-2 grid gap-2">
                     <label for="name">Name</label>
                     <Input
                         id="name"
@@ -175,26 +233,51 @@ const openDelete = (category: Category) => {
                     <InputError :message="errors?.name" />
                 </div>
 
-                <DialogFooter >
-                    <Button type="button" variant="outline" @click="createOpen = false" :disabled="processing">Cancel</Button>
-                    <Button type="submit" :processing="processing" :disabled="processing">Save</Button>
+                <DialogFooter>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        @click="createOpen = false"
+                        :disabled="processing"
+                        >Cancel</Button
+                    >
+                    <Button
+                        type="submit"
+                        :processing="processing"
+                        :disabled="processing"
+                        >Save</Button
+                    >
                 </DialogFooter>
             </Form>
         </Modal>
 
-        <Modal title="Delete Category" :description="`Are you sure you want to delete ${selected?.name}  ?`" v-model="deleteOpen">
+        <Modal
+            title="Delete Category"
+            :description="`Are you sure you want to delete ${selected?.name}  ?`"
+            v-model="deleteOpen"
+        >
             <Form
                 v-if="selected"
                 v-bind="destroy.form(selected.id)"
                 reset-on-error@sucess="() => deleteOpen = false; selected = null"
                 @sucess="deleteOpen = false"
-                v-slot="{processing}">
-
-
-                    <DialogFooter>
-                        <Button type="button" variant="outline" @click="deleteOpen = false" :disabled="processing">Cancel</Button>
-                        <Button type="submit" :processing="processing" :disabled="processing">Delete</Button>
-                    </DialogFooter>
+                v-slot="{ processing }"
+            >
+                <DialogFooter>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        @click="deleteOpen = false"
+                        :disabled="processing"
+                        >Cancel</Button
+                    >
+                    <Button
+                        type="submit"
+                        :processing="processing"
+                        :disabled="processing"
+                        >Delete</Button
+                    >
+                </DialogFooter>
             </Form>
         </Modal>
     </AppLayout>
