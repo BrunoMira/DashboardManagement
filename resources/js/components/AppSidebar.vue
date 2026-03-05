@@ -9,6 +9,8 @@ import {
     Mail,
     Library,
     MapPin,
+    List,
+    CheckSquare,
 } from 'lucide-vue-next';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -25,7 +27,9 @@ import {
 import { about, contact, courses, dashboard } from '@/routes';
 import { index as bookes } from '@/routes/bookes';
 import { index as categories } from '@/routes/categories';
+import { index as lists } from '@/routes/lists';
 import { index as properties } from '@/routes/properties';
+import { index as tasks } from '@/routes/tasks';
 import { type NavItem } from '@/types';
 import AppLogo from './AppLogo.vue';
 
@@ -34,6 +38,16 @@ const mainNavItems: NavItem[] = [
         title: 'Dashboard',
         href: dashboard(),
         icon: LayoutGrid,
+    },
+    {
+        title: 'TodoLists',
+        href: lists(),
+        icon: List,
+    },
+    {
+        title: 'Tasks',
+        href: '/tasks',
+        icon: CheckSquare,
     },
     {
         title: 'Courses',

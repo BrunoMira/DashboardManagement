@@ -19,6 +19,10 @@ export default defineConfigWithVueTs(
                     alwaysTryTypes: true,
                     project: './tsconfig.json',
                 },
+                alias: {
+                    map: [['@', './resources/js']],
+                    extensions: ['.js', '.vue']
+                }
             },
         },
         rules: {
@@ -41,6 +45,11 @@ export default defineConfigWithVueTs(
                     },
                 },
             ],
+            'import/no-unresolved': 'error',
+            'import/no-duplicates': 'error',
+            'import/newline-after-import': 'error',
+            'vue/no-undef-components': 'error',
+
         },
     },
     prettier,

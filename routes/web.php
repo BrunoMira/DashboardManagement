@@ -5,6 +5,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TodoListController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -25,9 +27,13 @@ Route::get('/about', function () {
 
 Route::get('/courses', [CourseController::class, 'index'])->name('courses');
 
+Route::resource('lists', TodoListController::class)->only(['index', 'store', 'update', 'destroy']);
+Route::resource('tasks', TaskController::class)->only(['index', 'store', 'update', 'destroy']);
+
 Route::resource('properties', PropertyController::class)->only(['index', 'store', 'update', 'destroy']);
 
 Route::resource('categories', CategoryController::class)->only(['index', 'store', 'update', 'destroy']);
+
 Route::resource('bookes', BookController::class)->only(['index', 'store', 'update', 'destroy']);
 
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
