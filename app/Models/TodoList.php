@@ -10,6 +10,7 @@ class TodoList extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'color'];
+
     protected $table = 'lists';
 
     public function tasks()

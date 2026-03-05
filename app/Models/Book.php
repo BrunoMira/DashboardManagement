@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Category;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +16,6 @@ class Book extends Model
     {
         return $this->belongsTo(Category::class);
     }
-
 
     protected function fullImagePath(): Attribute
     {

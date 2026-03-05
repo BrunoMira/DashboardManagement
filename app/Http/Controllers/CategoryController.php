@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -48,6 +47,4 @@ class CategoryController extends Controller
 
         return redirect()->back()->with('success', 'Categoria excluída com sucesso!');
     }
-
-
 }

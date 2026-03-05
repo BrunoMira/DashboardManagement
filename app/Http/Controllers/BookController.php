@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -69,7 +68,7 @@ class BookController extends Controller
     {
         $book = Book::findOrFail($id);
 
-        if($book->cover_image) {
+        if ($book->cover_image) {
             Storage::disk()->delete($book->cover_image);
         }
 
