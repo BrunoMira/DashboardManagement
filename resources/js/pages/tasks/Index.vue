@@ -326,9 +326,9 @@ const deleteTask = (taskId: number) => {
                                         ]"
                                         :preserve-scroll="true"
                                         :preserve-state="true"
-                                        v-html="link.label"
-                                    >
 
+                                    >
+                                        <span v-html="link.label" />
                                     </Link>
                                 </div>
                             </div>

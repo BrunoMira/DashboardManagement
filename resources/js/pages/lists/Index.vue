@@ -15,14 +15,6 @@
     import { type BreadcrumbItem } from '@/types';
 
 
-    interface Task {
-        id: number;
-        title: string;
-        description?: string;
-        priority?: string;
-        is_complete?: boolean;
-    }
-
     interface List {
         id: number;
         name: string;

@@ -29,7 +29,6 @@ import { index as bookes } from '@/routes/bookes';
 import { index as categories } from '@/routes/categories';
 import { index as lists } from '@/routes/lists';
 import { index as properties } from '@/routes/properties';
-import { index as tasks } from '@/routes/tasks';
 import { type NavItem } from '@/types';
 import AppLogo from './AppLogo.vue';
 
