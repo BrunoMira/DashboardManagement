@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Task\StoreTaskRequest;
 use App\Http\Requests\Task\UpdateTaskRequest;
 use App\Models\Task;
@@ -13,7 +12,6 @@ use Inertia\Inertia;
 
 class TaskController extends Controller
 {
-
     private TaskService $taskService;
 
     public function __construct(TaskService $taskService)
@@ -55,6 +53,7 @@ class TaskController extends Controller
     public function destroy(Request $request, Task $task)
     {
         $this->taskService->delete($task);
+
         return redirect()->back();
     }
 }

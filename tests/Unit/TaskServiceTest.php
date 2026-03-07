@@ -50,7 +50,7 @@ class TaskServiceTest extends TestCase
         $tasks = $this->service->getPaginatedTasks();
 
         //  validate latest sorting
-        $this->assertEquals($task3->id,  $tasks->first()->id);
+        $this->assertEquals($task3->id, $tasks->first()->id);
 
         $this->assertInstanceOf(Task::class, $task);
         $this->assertInstanceOf(Task::class, $task2);

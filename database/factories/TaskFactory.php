@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use Database\Factories\TodoListFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

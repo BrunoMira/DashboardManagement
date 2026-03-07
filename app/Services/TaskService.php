@@ -46,6 +46,7 @@ class TaskService
     public function update(array $data, Task $task): Task
     {
         $task->update($data);
+
         return $task;
     }
 
