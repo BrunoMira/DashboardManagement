@@ -2,79 +2,59 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Task\StoreTaskRequest;
+use App\Http\Requests\Task\UpdateTaskRequest;
 use App\Models\Task;
 use App\Models\TodoList;
+use App\Services\TaskService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class TaskController extends Controller
 {
+
+    private TaskService $taskService;
+
+    public function __construct(TaskService $taskService)
+    {
+        $this->taskService = $taskService;
+    }
+
     public function index(Request $request)
     {
-
-        $query = Task::query()->with('list');
-
-        if ($request->filled('search')) {
-            $query->where('title', 'like', '%'.$request->search.'%')
-                ->orWhere('description', 'like', '%'.$request->search.'%');
-        }
-
-        if ($request->filled('priority')) {
-            $query->where('priority', $request->priority);
-        }
-
-        if ($request->filled('list_id')) {
-            $query->where('list_id', $request->list_id);
-        }
-
-        $tasks = $query->latest()->paginate(10)->withQueryString();
+        $filters = $request->only(['search', 'priority', 'list_id']);
+        $tasks = $this->taskService->getPaginatedTasks($filters);
 
         $lists = TodoList::get();
 
         return Inertia::render('tasks/Index', [
             'tasks' => $tasks,
             'lists' => $lists,
-            'filters' => $request->only(['search', 'priority', 'list_id']),
+            'filters' => $filters,
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreTaskRequest $request)
     {
-        $data = $request->validate([
-            'title' => 'required',
-            'description' => 'sometimes',
-            'priority' => 'required|in:low,normal,high',
-            'is_complete' => 'sometimes|boolean',
-            'list_id' => 'required',
-        ]);
+        $data = $request->validated();
 
-        $data['priority'] = $data['priority'] ?? 'normal';
-
-        Task::create($data);
+        $this->taskService->create($data);
 
         return redirect()->back();
     }
 
-    public function update(Request $request, Task $task)
+    public function update(UpdateTaskRequest $request, Task $task)
     {
-        $data = $request->validate([
-            'title' => 'required',
-            'description' => 'sometimes',
-            'priority' => 'required|in:low,normal,high',
-            'is_complete' => 'sometimes|boolean',
-        ]);
-
-        $data['priority'] = $data['priority'] ?? 'normal';
-
-        $task->update($data);
+        $data = $request->validated();
+        $this->taskService->update($data, $task);
 
         return redirect()->back();
     }
 
     public function destroy(Request $request, Task $task)
     {
-        $task->delete();
-
+        $this->taskService->delete($task);
         return redirect()->back();
     }
 }

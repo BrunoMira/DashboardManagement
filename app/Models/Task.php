@@ -15,4 +15,12 @@ class Task extends Model
     {
         return $this->belongsTo(TodoList::class, 'list_id');
     }
+
+    public function scopeWhereSearch($query, $search)
+    {
+        return $query->where(function ($query) use ($search) {
+            $query->where('title', 'like', '%'.$search.'%')
+                ->orWhere('description', 'like', '%'.$search.'%');
+        });
+    }
 }
