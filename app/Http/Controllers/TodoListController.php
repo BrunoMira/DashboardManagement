@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TodoListRequest;
 use App\Models\TodoList;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class TodoListController extends Controller
@@ -18,25 +18,17 @@ class TodoListController extends Controller
         ]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(TodoListRequest $request): RedirectResponse
     {
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'color' => 'required|string|max:32',
-        ]);
-
+        $data = $request->validated();
         TodoList::create($data);
 
         return redirect()->route('lists.index');
     }
 
-    public function update(Request $request, TodoList $list): RedirectResponse
+    public function update(TodoListRequest $request, TodoList $list): RedirectResponse
     {
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'color' => 'required|string|max:32',
-        ]);
-
+        $data = $request->validated();
         $list->update($data);
 
         return redirect()->route('lists.index');
